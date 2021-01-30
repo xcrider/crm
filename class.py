@@ -30,21 +30,30 @@ class BaseContact:
     def contact(self):
         print(f"Wybieram numer {self.phone_number} i dzwonię do {self.first_name} {self.last_name}")
 
-    def create_contacts(number):
+    def create_contacts(contact_type, number):
 
         contact_list = []
 
         for i in range(0, number):
-            contact = BaseContact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
+            contact = contact_type(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
             contact_list.append(contact)
         return contact_list
 
 class BusinessContact(BaseContact):
+
     def __init__(self, company, position, *args, **kwargs):
+
         super().__init__(*args, **kwargs)
         self.company = company
         self.position = position
 
+    # def create_contacts(*args, **kwargs):
+
+    #     super().create_contacts(self, *args, **kwargs):
+    #         for i in range(0, number):
+    #             contact = contact_type(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email(), self.company = fake.company(), self.position.job())
+    #             contact_list.append(contact)
+    #         return contact_list
 
 if __name__ == "__main__":
 
@@ -75,4 +84,5 @@ if __name__ == "__main__":
     for person in by_email:
         print(person)
 
-    BaseContact.create_contacts(2)
+    print("\nWywołanie funkcji tworzecej kontakty: ")
+    print(BaseContact.create_contacts(BaseContact, 2))
