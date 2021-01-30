@@ -14,11 +14,11 @@ class BaseContact:
         self._label_length = 0
 
     @property
-    def _label_length(self):
+    def label_length(self):
         return self._label_length
 
-    @_label_length.setter
-    def name_lenght(self):
+    @label_length.setter
+    def label_lenght(self):
         self._label_length = 1 + len(self.first_name) + len(self.last_name)
 
     def __str__(self):
@@ -30,6 +30,14 @@ class BaseContact:
     def contact(self):
         print(f"Wybieram numer {self.phone_number} i dzwonię do {self.first_name} {self.last_name}")
 
+    def create_contacts(number):
+
+        contact_list = []
+
+        for i in range(0, number):
+            contact = BaseContact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
+            contact_list.append(contact)
+        return contact_list
 
 class BusinessContact(BaseContact):
     def __init__(self, company, position, *args, **kwargs):
@@ -49,7 +57,6 @@ if __name__ == "__main__":
 
     bperson = BusinessContact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), company = fake.company(), position = fake.job(),email = fake.email())    
 
-
     print("\n By first name: ")
     by_fname = sorted(person_list, key=lambda person: person.first_name)
 
@@ -67,3 +74,5 @@ if __name__ == "__main__":
 
     for person in by_email:
         print(person)
+
+    BaseContact.create_contacts(2)
