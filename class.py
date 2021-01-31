@@ -11,16 +11,9 @@ class BaseContact:
         self.email = email
         self.phone_number = phone_number
 
-        # VARIABLES
-        self._label_length = 0
-
     @property
     def label_length(self):
-        return self._label_length
-
-    @label_length.setter
-    def label_lenght(self):
-        self._label_length = 1 + len(self.first_name) + len(self.last_name)
+        return 1 + len(self.first_name) + len(self.last_name)
 
     def __str__(self):
         return f"{self.first_name}, {self.last_name}, {self.email}"
@@ -31,25 +24,6 @@ class BaseContact:
     def contact(self):
         print(f"Wybieram numer {self.phone_number} i dzwonię do {self.first_name} {self.last_name}")
 
-    def execuction_time(func):
-        def wrapper(contact_type, number):
-            start = time.time()
-            result = func(contact_type, number)
-            end = time.time()
-            timer = end - start
-            print(f"Execution time = {timer}")
-            return result
-        return wrapper
-
-    @execuction_time
-    def create_contacts(contact_type, number):
-
-        contact_list = []
-
-        for i in range(0, number):
-            contact = contact_type(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
-            contact_list.append(contact)
-        return contact_list
 
 class BusinessContact(BaseContact):
 
@@ -64,6 +38,27 @@ class BusinessContact(BaseContact):
     #     fposition = fake.job
     #     fcompany = fake.company
     #     super().create_contacts(self, *args, **kwargs, company = fcompany, position = fposition)
+
+
+def execuction_time(func):
+    def wrapper(contact_type, number):
+        start = time.time()
+        result = func(contact_type, number)
+        end = time.time()
+        timer = end - start
+        print(f"Execution time = {timer}")
+        return result
+    return wrapper
+
+@execuction_time
+def create_contacts(contact_type, number):
+
+    contact_list = []
+
+    for i in range(0, number):
+        contact = contact_type(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
+        contact_list.append(contact)
+    return contact_list
 
 
 if __name__ == "__main__":
@@ -96,4 +91,4 @@ if __name__ == "__main__":
         print(person)
 
     print("\nWywołanie funkcji tworzecej kontakty: ")
-    print(BaseContact.create_contacts(BaseContact, 1000))
+    print(create_contacts(BaseContact, 1000))
