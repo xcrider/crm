@@ -5,7 +5,35 @@ fake = Faker("pl_PL")
 
 
 class BaseContact:
+
+    """
+    A class to represent a contact.
+
+    ...
+
+    Attributes
+    ----------
+    first_name : str
+        first name of the person
+    last_name : str
+        family name of the person
+    email : str
+        email address of the person
+    phone_number : str
+        phone number of the person
+
+    Methods
+    -------
+    contact(additional=""):
+        Calls the person's phone numnber and print a message.
+    """
+
     def __init__(self, first_name, last_name, email, phone_number):
+
+        """
+        Constructs all the necessary attributes for the person object.
+        """
+
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -19,7 +47,7 @@ class BaseContact:
         return f"{self.first_name}, {self.last_name}, {self.email}"
 
     def __repr__(self):
-        return f"BaseContact(first_name = {self.first_name})"
+        return f"BaseContact(first_name = {self.first_name}"
 
     def contact(self):
         print(f"Wybieram numer {self.phone_number} i dzwonię do {self.first_name} {self.last_name}")
@@ -27,17 +55,29 @@ class BaseContact:
 
 class BusinessContact(BaseContact):
 
+    """
+    A sub-class to represent a business contact card.
+    ...
+
+    Attributes
+    ----------
+    company : str
+        company name of the person
+    position : str
+        job title of the person
+
+    Methods
+    -------
+    info(additional=""):
+        Prints the person's name and age.
+    """
+
+
     def __init__(self, company, position, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
         self.company = company
         self.position = position
-
-    # def create_contacts(*args, **kwargs):
-
-    #     fposition = fake.job
-    #     fcompany = fake.company
-    #     super().create_contacts(self, *args, **kwargs, company = fcompany, position = fposition)
 
 
 def execuction_time(func):
@@ -49,6 +89,7 @@ def execuction_time(func):
         print(f"Execution time = {timer}")
         return result
     return wrapper
+
 
 @execuction_time
 def create_contacts(contact_type, number):
@@ -74,7 +115,6 @@ if __name__ == "__main__":
 
     print("\n By first name: ")
     by_fname = sorted(person_list, key=lambda person: person.first_name)
-
     for person in by_fname:
         print(person)
 
@@ -91,4 +131,4 @@ if __name__ == "__main__":
         print(person)
 
     print("\nWywołanie funkcji tworzecej kontakty: ")
-    print(create_contacts(BaseContact, 1000))
+    print(create_contacts(BusinessContact, 1000))
