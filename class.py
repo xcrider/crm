@@ -72,34 +72,36 @@ class BusinessContact(BaseContact):
         Prints the person's name and age.
     """
 
-
     def __init__(self, company, position, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
         self.company = company
         self.position = position
 
+contact_types_dict = {
+        private: BaseContact,
+        business: BusinessContact
 
-def execuction_time(func):
-    def wrapper(contact_type, number):
-        start = time.time()
-        result = func(contact_type, number)
-        end = time.time()
-        timer = end - start
-        print(f"Execution time = {timer}")
-        return result
-    return wrapper
+# def execuction_time(func):
+#     def wrapper(contact_type, number):
+#         start = time.time()
+#         result = func(contact_type, number)
+#         end = time.time()
+#         timer = end - start
+#         print(f"Execution time = {timer}")
+#         return result
+#     return wrapper
 
 
-@execuction_time
+# @execuction_time
 def create_contacts(contact_type, number):
+    contact = contact_types_dict[contact_type]
+    print(f"contact_type:  {contact_type}")
 
-    contact_list = []
-
+    contacts_list = []
     for i in range(0, number):
-        contact = contact_type(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
-        contact_list.append(contact)
-    return contact_list
+        new_contact = contact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
+        contacts_list.append(new_contact)
 
 
 if __name__ == "__main__":
@@ -114,21 +116,21 @@ if __name__ == "__main__":
     bperson = BusinessContact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), company = fake.company(), position = fake.job(),email = fake.email())    
 
     print("\n By first name: ")
-    by_fname = sorted(person_list, key=lambda person: person.first_name)
-    for person in by_fname:
+    person_list = sorted(person_list, key=lambda person: person.first_name)
+    for person in person_list:
         print(person)
 
     print("\n By last name: ")
-    by_lname = sorted(person_list, key=lambda person: person.last_name)
+    person_list = sorted(person_list, key=lambda person: person.last_name)
 
-    for person in by_lname:
+    for person in person_list:
         print(person)
 
     print("\n By email: ")
-    by_email = sorted(person_list, key=lambda person: person.last_name)
+    person_list = sorted(person_list, key=lambda person: person.email)
 
-    for person in by_email:
+    for person in person_list:
         print(person)
 
     print("\nWywołanie funkcji tworzecej kontakty: ")
-    print(create_contacts(BusinessContact, 1000))
+    create_contacts(private, 1000)
