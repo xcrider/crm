@@ -78,9 +78,7 @@ class BusinessContact(BaseContact):
         self.company = company
         self.position = position
 
-contact_types_dict = {
-        private: BaseContact,
-        business: BusinessContact
+
 
 # def execuction_time(func):
 #     def wrapper(contact_type, number):
@@ -95,6 +93,12 @@ contact_types_dict = {
 
 # @execuction_time
 def create_contacts(contact_type, number):
+
+    contact_types_dict = {
+        'private': BaseContact,
+        'business': BusinessContact
+    }
+
     contact = contact_types_dict[contact_type]
     print(f"contact_type:  {contact_type}")
 
@@ -102,6 +106,7 @@ def create_contacts(contact_type, number):
     for i in range(0, number):
         new_contact = contact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), email = fake.email())
         contacts_list.append(new_contact)
+    return contacts_list
 
 
 if __name__ == "__main__":
@@ -115,6 +120,7 @@ if __name__ == "__main__":
 
     bperson = BusinessContact(first_name = fake.first_name(), last_name = fake.last_name(), phone_number = fake.phone_number(), company = fake.company(), position = fake.job(),email = fake.email())    
 
+    
     print("\n By first name: ")
     person_list = sorted(person_list, key=lambda person: person.first_name)
     for person in person_list:
@@ -133,4 +139,4 @@ if __name__ == "__main__":
         print(person)
 
     print("\nWywołanie funkcji tworzecej kontakty: ")
-    create_contacts(private, 1000)
+    create_contacts('private', 1000)
